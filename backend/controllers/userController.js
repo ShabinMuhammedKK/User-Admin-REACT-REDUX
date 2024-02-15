@@ -14,7 +14,6 @@ const homePage = asyncHandler(async(req,res)=>{
     res.status(200).send('homePage');
 })
 const loginSubmit = asyncHandler(async(req,res)=>{
-    console.log(req.params.id)
     res.status(200).send('loginSubmit');
 })
 const registerSubmit = asyncHandler(async(req,res)=>{
