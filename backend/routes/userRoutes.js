@@ -1,14 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const {loginUser,
-    homePage,
-    logOutUser,
-    loginSubmit,
-    profImgPost,
-    profilePage,
-    profUpdate,
-    registerSubmit,
-    registerUser} = require('../controllers/userController')
+const {loginUser,registerUser} = require('../controllers/userController')
+const {protect} = require('../middlewares/authMiddleware')
 
 
 /*-----------------------------
@@ -19,15 +12,12 @@ const {loginUser,
 -------------------------------*/
 
 
-router.get('/login',loginUser)
-router.get('/home',homePage)
-router.get('/register',registerUser)
-router.get('/profile',profilePage)
-router.post('/loginsubmit/:id',loginSubmit)
-router.post('/regsubmit/',registerSubmit)
-router.post('/logout',logOutUser)
-router.put('/postprofimg',profImgPost)
-router.patch('/profupdate',profUpdate)
+router.post('/registerUser',registerUser)
+router.post('/loginUser',loginUser)
+
+
+
+
 
 
 
