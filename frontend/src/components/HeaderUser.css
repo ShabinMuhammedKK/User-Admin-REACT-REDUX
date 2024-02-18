@@ -1,0 +1,25 @@
+.main-container{
+    height: 4rem;
+    background-color: rgb(129,50,135);
+}
+.contents{
+    color: white;
+    font-size: larger;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 100%;
+}
+.actions{
+    font-size: x-large;
+    display: flex;
+    min-width: 100PX;
+    justify-content: space-around;
+    cursor: pointer;
+}
+.btn:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
