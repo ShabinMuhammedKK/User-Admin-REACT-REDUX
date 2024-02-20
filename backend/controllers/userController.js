@@ -5,15 +5,22 @@ const bcrypt = require('bcryptjs');
 
 
 const registerUser = asyncHandler(async(req,res)=>{
+
+
+    const data = req.body;
+    console.log(data)
+
+
+
     const {name,email,password,confPassword} = req.body;
     if(!name || !email || !password || !confPassword){
         res.status(400)
         throw new Error('Please add all fields');
     }
-    if(!(password === confPassword)){
-        res.status(400)
-        throw new Error('Passwords is not match');
-    }
+    if (password.length < 6 || confPassword.length <6) {
+        res.status(400);
+        throw new Error('Password must be at least 6 characters long');
+      }
     const userExits = await UserDB.findOne({email})
     if(userExits){
         res.status(400)
@@ -44,6 +51,8 @@ const registerUser = asyncHandler(async(req,res)=>{
 
 
 const loginUser = asyncHandler(async(req,res)=>{
+
+
     const {email,password} = req.body;
     const User = await UserDB.findOne({email});
     if(User && (await bcrypt.compare(password,User.password))){

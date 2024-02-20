@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './RegisterUser.css';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
+import {toast} from 'react-toastify';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+
+
+
 
 const RegisterUser = () => {
   const [formData, setFormData] = useState({
@@ -10,19 +17,31 @@ const RegisterUser = () => {
     confPassword: ''
   });
 
+  const navigate = useNavigate();
+
   const { name, email, password, confPassword } = formData;
 
   const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value
-    }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    
+
+    if (password !== confPassword) {
+      toast.error('Passwords do not match');
+    } else {
+      try {
+        const response = await axios.post('http://localhost:8000/user/registerUser', formData);
+        if(response){
+          navigate('/home')
+        }
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
+    }
   };
+
 
   return (
     <>
@@ -85,7 +104,7 @@ const RegisterUser = () => {
               </div>
             </form>
             <p>
-              Already have an account? <Link to="/user/login">Login</Link>
+              Already have an account? <Link to="/">Login</Link>
             </p>
           </section>
         </div>

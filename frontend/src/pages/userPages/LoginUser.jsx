@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './LoginUser.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios'
+import {toast} from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import {useDispatch,useSelector} from 'react-redux';
+import {setCredentials} from '../../app/userAuthSlice';
 
 const LoginUser = () => {
   const [formData, setFormData] = useState({
@@ -8,17 +13,37 @@ const LoginUser = () => {
     password: '',
   });
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {email, password} = formData;
+
+  const {userInfo} = useSelector((state)=>state.userAuth)
+
+
+useEffect(()=>{
+  if(userInfo){
+    navigate('/home')
+  }
+},[navigate,userInfo]);
+
+
 
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    try {
+     await axios.post('http://localhost:8000/user/loginUser',formData)
+      dispatch(setCredentials(formData))
+      navigate('/home')
+    } catch (error) {
+      toast.error(error?.data?.message || 'An error occurred');
+    }
     
   };
 
@@ -63,7 +88,7 @@ const LoginUser = () => {
               </div>
             </form>
             <p>
-            Don't have an account? <Link to="/user/register">Register</Link>
+            Don't have an account? <Link to="/register">Register</Link>
             </p>
           </section>
         </div>

@@ -4,10 +4,7 @@ const UserDB = require('../models/userModel')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-//register
-//login
-//get all users
-//delete user
+
 //add user
 //edit user
 
@@ -67,16 +64,26 @@ const loginAdmin = asyncHandler(async(req,res)=>{
     }
 })
 
-const getAllUsers = asyncHandler(async(req,res)=>{
-    const Users = await UserDB.find()
-    if(Users){
-        res.status(200).json({
-             Users
-        })
-    }else{
-        res.status(400)
-        throw new Error('Invalid user data')
+const getAllUsers = asyncHandler(async (req, res) => {
+    const Users = await UserDB.find();
+    if (Users) {
+        res.status(200).json({ Users });
+        
+    } else {
+        res.status(404).json({ message: 'No users found' });
     }
+});
+
+const deleteUser = asyncHandler( async (req,res)=>{
+    const userId = req.params.userId;
+   
+    const user = await UserDB.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    await UserDB.findByIdAndDelete(userId);
+    res.status(200).json({ message: 'User deleted successfully' });
 })
 
 const generateToken = (id)=>{
@@ -88,5 +95,6 @@ const generateToken = (id)=>{
 module.exports = {
     registerAdmin,
     loginAdmin,
-    getAllUsers
+    getAllUsers,
+    deleteUser
 }
