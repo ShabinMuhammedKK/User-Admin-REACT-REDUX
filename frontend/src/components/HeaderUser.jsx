@@ -5,27 +5,47 @@ import {
   FaSignOutAlt,
   FaUser,
   FaDatabase,
+  FaRegistered,
+  FaAd,
+  FaBuilding,
+  FaMarker,
 } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import "./HeaderUser.css";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../app/userAuthSlice";
+import { logoutAdmin } from "../app/adminAuthSlice";
+
+
+
 
 const HeaderUser = () => {
   const location = useLocation();
 
   const isHomePage = location.pathname === "/home";
   const isAdminPage = location.pathname.startsWith("/admin");
+  const isAdminHomePage = location.pathname === "/admin/home";
+  const isAdminDashPage = location.pathname === "/admin/dash";
+  const isAdminRegiterPage = location.pathname === '/admin/register'
+  const isUserLogin = location.pathname === '/'
+  const isAdminLogin = location.pathname === '/admin'
   const isProfilePage = location.pathname === "/profile";
   const isRegisterPage = location.pathname === "/register";
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Perform logout action based on user type (admin or regular user)
+
     if (isAdminPage) {
-      // Handle admin logout
-      // Redirect to admin login page or perform admin logout action
+      dispatch(logoutAdmin())
+      navigate('/admin/')
+      
       console.log("Admin logout");
     } else {
-      // Handle regular user logout
-      // Redirect to regular user login page or perform regular user logout action
+      dispatch(logoutUser())
+      navigate('/')
       console.log("Regular user logout");
     }
   };
@@ -54,7 +74,7 @@ const HeaderUser = () => {
               <button onClick={handleLogout} className="butn">
                 <FaSignOutAlt className="btn" />
               </button>
-              <span className="page-name">LogOut</span>
+              <span className="page-name">Logout</span>
 
               <Link to="/profile" style={{ color: "inherit" }}>
                 <FaUser className="btn" />
@@ -74,14 +94,22 @@ const HeaderUser = () => {
               <span className="page-name">Home</span>
             </>
           )}
+          {isUserLogin && (
+            <>
+             <Link to="/register" style={{ color: "inherit" }}>
+                <FaMarker className="btn" />
+              </Link>
+              <span className="page-name">Register</span>
+            </>
+          )}
 
           {/* Render admin-specific actions */}
-          {isAdminPage && !isRegisterPage && (
+          {isAdminDashPage && !isAdminRegiterPage && !isAdminLogin && (
             <>
               <button onClick={handleLogout} className="butn">
                 <FaSignOutAlt className="btn" />
               </button>
-              <span className="page-name">LogOut</span>
+              <span className="page-name">Logout</span>
 
               {location.pathname === "/admin/dash" && (
                 <>
@@ -95,17 +123,43 @@ const HeaderUser = () => {
                 </>
               )}
 
+            </>
+          )}
+          {isAdminHomePage && !isAdminRegiterPage && !isAdminLogin && (
+            <>
+              <button onClick={handleLogout} className="butn">
+                <FaSignOutAlt className="btn" />
+              </button>
+              <span className="page-name">Logout</span>
+
               {location.pathname === "/admin/home" && (
                 <>
                   <Link
-                    to="/admin/dash"
-                    style={{ color: "inherit" }}
-                  >
-                    <FaDatabase className="btn" />
-                  </Link>
-                  <span className="page-name">Dashboard</span>
+                to="/admin/dash"
+                style={{ color: "inherit" }}
+              >
+                <FaDatabase className="btn" />
+              </Link>
+              <span className="page-name">Dashboard</span>
                 </>
               )}
+
+            </>
+          )}
+          {isAdminRegiterPage && (
+            <>
+             <Link to="/admin" style={{ color: "inherit" }}>
+                <FaSignInAlt className="btn" />
+              </Link>
+              <span className="page-name">Login</span>
+            </>
+          )}
+          {isAdminLogin && (
+            <>
+             <Link to="/admin/register" style={{ color: "inherit" }}>
+                <FaMarker className="btn" />
+              </Link>
+              <span className="page-name">Register</span>
             </>
           )}
         </div>

@@ -52,7 +52,7 @@ const LoginAdmin = () => {
       <div className="parent-container">
         <div className="child-container">
           <section className="heading">
-            <h1>LOGIN</h1>
+            <h1>Admin Login</h1>
             <p>Please login with your existing account</p>
           </section>
           <section className="form">
