@@ -24,7 +24,7 @@ const HomeAdmin = () => {
     };
   
     fetchData();
-  }, [adminData])
+  }, [adminData]);
 
   return (
     <>
