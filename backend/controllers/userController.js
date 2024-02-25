@@ -75,10 +75,16 @@ const genetateToken = (id)=>{
     })
 }
 
+const userFullData = asyncHandler(async(req,res)=>{
+    const{userEmail} = req.body
+    const userFullData = await UserDB.findOne({email:userEmail})
+    res.status(200).json(userFullData)
+})
 
 
 
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    userFullData
 }

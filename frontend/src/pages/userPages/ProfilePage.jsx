@@ -1,9 +1,43 @@
 import React from 'react'
 import './ProfilePage.css'
 import { FaPen } from "react-icons/fa";
+import { useSelector } from 'react-redux';
+import { useState,useEffect } from 'react';
+import axios from 'axios';
 
 
 const ProfilePage = () => {
+
+  const [userName,setUserName] = useState('');
+  const [usersEmail,setUserEmail] = useState('');
+
+
+  const userData = useSelector(state => state.userAuth);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userEmail = userData.userInfo.email;
+        const response = await axios.post('http://localhost:8000/user/userFullData', {userEmail});
+        const userName = response.data.name
+        setUserName(userName)
+        setUserEmail(userEmail)
+
+
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+  
+    fetchData();
+  }, [userData]);
+
+
+  const handleUploadImg = ()=>{
+    console.log('hello')
+  }
+
   return (
     <>
       <div className="parent-container">
@@ -14,38 +48,22 @@ const ProfilePage = () => {
           </section>
           <div className="profile-div">
             <div className="img-add">
-                <FaPen className='edit-pen'/>
+                <FaPen className='edit-pen' onClick={handleUploadImg}/>
             </div>
           </div>
           <section className="form">
             <form >
               <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="name"
-                  name="name"
-                //   value={name}
-                  placeholder="Enter your name"
-                //   onChange={onChange}
-                />
+              <h4>Name : {userName}</h4>
               </div>
               <div className="form-group">
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email"
-                  name="email"
-                //   value={email}
-                  placeholder="Enter your email"
-                //   onChange={onChange}
-                />
+                <h4>Email : {usersEmail}</h4>
               </div>
               
               <div className="form-group">
-                <button type="submit" className="btn1 btn-block">
+                {/* <button type="submit" className="btn1 btn-block">
                   Update
-                </button>
+                </button> */}
               </div>
             </form>
           </section>

@@ -79,30 +79,55 @@ const DashAdmin = () => {
             )}
 
             <ul>
-              {users.map((user) => (
-                <li key={user._id}>
-                  <div className="user-data-container">
-                    <div className="user-data">{user.name}</div>{" "}
-                    <div className="user-data">{user.email}</div>{" "}
-                    <div className="user-data">
-                      <button
-                        className="btndash btn-b"
-                        onClick={() => handleEdit(user)}
-                      >
-                        Edit
-                      </button>
-                    </div>
-                    <div className="user-data">
-                      <button
-                        className="btndash btn-r"
-                        onClick={() => handleDelete(user._id)}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                </li>
-              ))}
+              {filteredUsers && filteredUsers.length > 0
+                ? filteredUsers.map((filteredUser) => (
+                    <li key={filteredUser._id}>
+                      <div className="user-data-container">
+                        <div className="user-data">{filteredUser.name}</div>{" "}
+                        <div className="user-data">{filteredUser.email}</div>{" "}
+                        <div className="user-data">
+                          <button
+                            className="btndash btn-b"
+                            onClick={() => handleEdit(filteredUser)}
+                          >
+                            Edit
+                          </button>
+                        </div>
+                        <div className="user-data">
+                          <button
+                            className="btndash btn-r"
+                            onClick={() => handleDelete(filteredUser._id)}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  ))
+                : users.map((user) => (
+                    <li key={user._id}>
+                      <div className="user-data-container">
+                        <div className="user-data">{user.name}</div>{" "}
+                        <div className="user-data">{user.email}</div>{" "}
+                        <div className="user-data">
+                          <button
+                            className="btndash btn-b"
+                            onClick={() => handleEdit(user)}
+                          >
+                            Edit
+                          </button>
+                        </div>
+                        <div className="user-data">
+                          <button
+                            className="btndash btn-r"
+                            onClick={() => handleDelete(user._id)}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
             </ul>
           </section>
         </div>

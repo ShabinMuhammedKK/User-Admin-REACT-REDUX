@@ -92,9 +92,16 @@ const generateToken = (id)=>{
     })
 }
 
+const getAllAdmins = asyncHandler(async(req,res)=>{
+    const{adminEmail} = req.body
+    const adminFullData = await AdminDB.findOne({email:adminEmail})
+    res.status(200).json(adminFullData)
+})
+
 module.exports = {
     registerAdmin,
     loginAdmin,
     getAllUsers,
-    deleteUser
+    deleteUser,
+    getAllAdmins
 }
