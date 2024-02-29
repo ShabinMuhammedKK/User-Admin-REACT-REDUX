@@ -24,7 +24,7 @@ const LoginAdmin = () => {
     if(adminInfo){
       navigate('/admin/home')
     }
-  },[navigate,adminInfo])
+  },[navigate,adminInfo]);
 
 
 
