@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./DashAdmin.css";
 import { FaSearch } from "react-icons/fa";
-import axios from "axios";
+import axios from "axios"
 
 const DashAdmin = () => {
   const [users, setUsers] = useState([]);
