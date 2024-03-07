@@ -19,7 +19,7 @@ const DashAdmin = () => {
           console.log("response not found");
         }
       } catch (error) {
-        console.log("Error fetching data:", error);
+        console.log("Error fetching data:", error)
       }
     };
 
