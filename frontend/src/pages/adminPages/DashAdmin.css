@@ -10,7 +10,7 @@
 }
 .user-data-container{
     display: flex;
-    border-radius: 6px
+    border-radius: 6px;
     height:90px;
     background-color:rgb( 172,77,164,0.2);
 }
