@@ -22,7 +22,7 @@ const LoginAdmin = () => {
 
   useEffect(()=>{
     if(adminInfo){
-      navigate('/admin/home')
+      navigate('/admin/home');
     }
   },[navigate,adminInfo])
 
